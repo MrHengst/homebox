@@ -40,10 +40,18 @@ const (
 	// FieldSerialNumber holds the string denoting the serial_number field in the database.
 	FieldSerialNumber = "serial_number"
 	// FieldModelNumber holds the string denoting the model_number field in the database.
-	FieldModelNumber = "model_number"
-	// FieldManufacturer holds the string denoting the manufacturer field in the database.
-	FieldManufacturer = "manufacturer"
-	// FieldLifetimeWarranty holds the string denoting the lifetime_warranty field in the database.
+        FieldModelNumber = "model_number"
+        // FieldManufacturer holds the string denoting the manufacturer field in the database.
+        FieldManufacturer = "manufacturer"
+        // FieldShoeSize holds the string denoting the shoe_size field in the database.
+        FieldShoeSize = "shoe_size"
+        // FieldShoeColor holds the string denoting the shoe_color field in the database.
+        FieldShoeColor = "shoe_color"
+        // FieldHeelHeight holds the string denoting the heel_height field in the database.
+        FieldHeelHeight = "heel_height"
+        // FieldShoeShape holds the string denoting the shoe_shape field in the database.
+        FieldShoeShape = "shoe_shape"
+        // FieldLifetimeWarranty holds the string denoting the lifetime_warranty field in the database.
 	FieldLifetimeWarranty = "lifetime_warranty"
 	// FieldWarrantyExpires holds the string denoting the warranty_expires field in the database.
 	FieldWarrantyExpires = "warranty_expires"
@@ -146,9 +154,13 @@ var Columns = []string{
 	FieldAssetID,
 	FieldSyncChildItemsLocations,
 	FieldSerialNumber,
-	FieldModelNumber,
-	FieldManufacturer,
-	FieldLifetimeWarranty,
+        FieldModelNumber,
+        FieldManufacturer,
+        FieldShoeSize,
+        FieldShoeColor,
+        FieldHeelHeight,
+        FieldShoeShape,
+        FieldLifetimeWarranty,
 	FieldWarrantyExpires,
 	FieldWarrantyDetails,
 	FieldPurchaseTime,

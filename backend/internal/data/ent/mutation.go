@@ -3406,8 +3406,12 @@ type ItemMutation struct {
 	sync_child_items_locations *bool
 	serial_number              *string
 	model_number               *string
-	manufacturer               *string
-	lifetime_warranty          *bool
+        manufacturer               *string
+        shoe_size                  *string
+        shoe_color                 *string
+        heel_height                *float64
+        shoe_shape                 *string
+        lifetime_warranty          *bool
 	warranty_expires           *time.Time
 	warranty_details           *string
 	purchase_time              *time.Time
@@ -4168,8 +4172,179 @@ func (m *ItemMutation) ManufacturerCleared() bool {
 
 // ResetManufacturer resets all changes to the "manufacturer" field.
 func (m *ItemMutation) ResetManufacturer() {
-	m.manufacturer = nil
-	delete(m.clearedFields, item.FieldManufacturer)
+        m.manufacturer = nil
+        delete(m.clearedFields, item.FieldManufacturer)
+}
+
+// SetShoeSize sets the "shoe_size" field.
+func (m *ItemMutation) SetShoeSize(s string) {
+        m.shoe_size = &s
+}
+
+// ShoeSize returns the value of the "shoe_size" field in the mutation.
+func (m *ItemMutation) ShoeSize() (r string, exists bool) {
+        v := m.shoe_size
+        if v == nil {
+                return
+        }
+        return *v, true
+}
+
+// OldShoeSize returns the old "shoe_size" field's value of the Item entity.
+func (m *ItemMutation) OldShoeSize(ctx context.Context) (v string, err error) {
+        if !m.op.Is(OpUpdateOne) {
+                return v, errors.New("OldShoeSize is only allowed on UpdateOne operations")
+        }
+        if m.id == nil || m.oldValue == nil {
+                return v, errors.New("OldShoeSize requires an ID field in the mutation")
+        }
+        oldValue, err := m.oldValue(ctx)
+        if err != nil {
+                return v, fmt.Errorf("querying old value for OldShoeSize: %w", err)
+        }
+        return oldValue.ShoeSize, nil
+}
+
+// ClearShoeSize clears the value of the "shoe_size" field.
+func (m *ItemMutation) ClearShoeSize() {
+        m.shoe_size = nil
+        m.clearedFields[item.FieldShoeSize] = struct{}{}
+}
+
+// ShoeSizeCleared returns if the "shoe_size" field was cleared in this mutation.
+func (m *ItemMutation) ShoeSizeCleared() bool {
+        _, ok := m.clearedFields[item.FieldShoeSize]
+        return ok
+}
+
+// ResetShoeSize resets all changes to the "shoe_size" field.
+func (m *ItemMutation) ResetShoeSize() {
+        m.shoe_size = nil
+        delete(m.clearedFields, item.FieldShoeSize)
+}
+
+// SetShoeColor sets the "shoe_color" field.
+func (m *ItemMutation) SetShoeColor(s string) {
+        m.shoe_color = &s
+}
+
+func (m *ItemMutation) ShoeColor() (r string, exists bool) {
+        v := m.shoe_color
+        if v == nil {
+                return
+        }
+        return *v, true
+}
+
+func (m *ItemMutation) OldShoeColor(ctx context.Context) (v string, err error) {
+        if !m.op.Is(OpUpdateOne) {
+                return v, errors.New("OldShoeColor is only allowed on UpdateOne operations")
+        }
+        if m.id == nil || m.oldValue == nil {
+                return v, errors.New("OldShoeColor requires an ID field in the mutation")
+        }
+        oldValue, err := m.oldValue(ctx)
+        if err != nil {
+                return v, fmt.Errorf("querying old value for OldShoeColor: %w", err)
+        }
+        return oldValue.ShoeColor, nil
+}
+
+func (m *ItemMutation) ClearShoeColor() {
+        m.shoe_color = nil
+        m.clearedFields[item.FieldShoeColor] = struct{}{}
+}
+
+func (m *ItemMutation) ShoeColorCleared() bool {
+        _, ok := m.clearedFields[item.FieldShoeColor]
+        return ok
+}
+
+func (m *ItemMutation) ResetShoeColor() {
+        m.shoe_color = nil
+        delete(m.clearedFields, item.FieldShoeColor)
+}
+
+func (m *ItemMutation) SetHeelHeight(f float64) {
+        m.heel_height = &f
+}
+
+func (m *ItemMutation) HeelHeight() (r float64, exists bool) {
+        v := m.heel_height
+        if v == nil {
+                return
+        }
+        return *v, true
+}
+
+func (m *ItemMutation) OldHeelHeight(ctx context.Context) (v float64, err error) {
+        if !m.op.Is(OpUpdateOne) {
+                return v, errors.New("OldHeelHeight is only allowed on UpdateOne operations")
+        }
+        if m.id == nil || m.oldValue == nil {
+                return v, errors.New("OldHeelHeight requires an ID field in the mutation")
+        }
+        oldValue, err := m.oldValue(ctx)
+        if err != nil {
+                return v, fmt.Errorf("querying old value for OldHeelHeight: %w", err)
+        }
+        return oldValue.HeelHeight, nil
+}
+
+func (m *ItemMutation) ClearHeelHeight() {
+        m.heel_height = nil
+        m.clearedFields[item.FieldHeelHeight] = struct{}{}
+}
+
+func (m *ItemMutation) HeelHeightCleared() bool {
+        _, ok := m.clearedFields[item.FieldHeelHeight]
+        return ok
+}
+
+func (m *ItemMutation) ResetHeelHeight() {
+        m.heel_height = nil
+        delete(m.clearedFields, item.FieldHeelHeight)
+}
+
+func (m *ItemMutation) SetShoeShape(s string) {
+        m.shoe_shape = &s
+}
+
+func (m *ItemMutation) ShoeShape() (r string, exists bool) {
+        v := m.shoe_shape
+        if v == nil {
+                return
+        }
+        return *v, true
+}
+
+func (m *ItemMutation) OldShoeShape(ctx context.Context) (v string, err error) {
+        if !m.op.Is(OpUpdateOne) {
+                return v, errors.New("OldShoeShape is only allowed on UpdateOne operations")
+        }
+        if m.id == nil || m.oldValue == nil {
+                return v, errors.New("OldShoeShape requires an ID field in the mutation")
+        }
+        oldValue, err := m.oldValue(ctx)
+        if err != nil {
+                return v, fmt.Errorf("querying old value for OldShoeShape: %w", err)
+        }
+        return oldValue.ShoeShape, nil
+}
+
+func (m *ItemMutation) ClearShoeShape() {
+        m.shoe_shape = nil
+        m.clearedFields[item.FieldShoeShape] = struct{}{}
+}
+
+func (m *ItemMutation) ShoeShapeCleared() bool {
+        _, ok := m.clearedFields[item.FieldShoeShape]
+        return ok
+}
+
+func (m *ItemMutation) ResetShoeShape() {
+        m.shoe_shape = nil
+        delete(m.clearedFields, item.FieldShoeShape)
 }
 
 // SetLifetimeWarranty sets the "lifetime_warranty" field.

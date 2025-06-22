@@ -80,6 +80,10 @@ export interface ItemCreate {
   name: string;
   parentId?: string | null;
   quantity: number;
+  shoeSize: string;
+  shoeColor: string;
+  heelHeight: number;
+  shoeShape: string;
 }
 
 export interface ItemField {
@@ -108,6 +112,10 @@ export interface ItemOut {
   /** Edges */
   location?: LocationSummary | null;
   manufacturer: string;
+  shoeSize: string;
+  shoeColor: string;
+  heelHeight: number;
+  shoeShape: string;
   modelNumber: string;
   name: string;
   /** Extras */
@@ -154,6 +162,10 @@ export interface ItemSummary {
   /** Edges */
   location?: LocationSummary | null;
   name: string;
+  shoeSize: string;
+  shoeColor: string;
+  heelHeight: number;
+  shoeShape: string;
   purchasePrice: number;
   quantity: number;
   /** Sale details */
@@ -175,6 +187,10 @@ export interface ItemUpdate {
   /** Edges */
   locationId: string;
   manufacturer: string;
+  shoeSize: string;
+  shoeColor: string;
+  heelHeight: number;
+  shoeShape: string;
   modelNumber: string;
   /**
    * @minLength 1

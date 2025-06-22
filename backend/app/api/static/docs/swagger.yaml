@@ -93,6 +93,14 @@ definitions:
         x-nullable: true
       quantity:
         type: integer
+      shoeSize:
+        type: string
+      shoeColor:
+        type: string
+      heelHeight:
+        type: number
+      shoeShape:
+        type: string
     required:
     - name
     type: object
@@ -150,6 +158,14 @@ definitions:
         x-nullable: true
         x-omitempty: true
       manufacturer:
+        type: string
+      shoeSize:
+        type: string
+      shoeColor:
+        type: string
+      heelHeight:
+        type: number
+      shoeShape:
         type: string
       modelNumber:
         type: string
@@ -239,6 +255,14 @@ definitions:
         x-omitempty: true
       name:
         type: string
+      shoeSize:
+        type: string
+      shoeColor:
+        type: string
+      heelHeight:
+        type: number
+      shoeShape:
+        type: string
       purchasePrice:
         type: number
       quantity:
@@ -285,6 +309,14 @@ definitions:
         description: Edges
         type: string
       manufacturer:
+        type: string
+      shoeSize:
+        type: string
+      shoeColor:
+        type: string
+      heelHeight:
+        type: number
+      shoeShape:
         type: string
       modelNumber:
         type: string
