@@ -56,18 +56,24 @@ type (
 		// TimeValue    time.Time `json:"timeValue,omitempty"`
 	}
 
-	ItemCreate struct {
-		ImportRef   string    `json:"-"`
-		ParentID    uuid.UUID `json:"parentId"    extensions:"x-nullable"`
-		Name        string    `json:"name"        validate:"required,min=1,max=255"`
-		Quantity    int       `json:"quantity"`
-		Description string    `json:"description" validate:"max=1000"`
-		AssetID     AssetID   `json:"-"`
+        ItemCreate struct {
+                ImportRef   string    `json:"-"`
+                ParentID    uuid.UUID `json:"parentId"    extensions:"x-nullable"`
+                Name        string    `json:"name"        validate:"required,min=1,max=255"`
+                Quantity    int       `json:"quantity"`
+                Description string    `json:"description" validate:"max=1000"`
+                AssetID     AssetID   `json:"-"`
 
-		// Edges
-		LocationID uuid.UUID   `json:"locationId"`
-		LabelIDs   []uuid.UUID `json:"labelIds"`
-	}
+                // Edges
+                LocationID uuid.UUID   `json:"locationId"`
+                LabelIDs   []uuid.UUID `json:"labelIds"`
+
+                // Shoe Specific
+                ShoeSize   string  `json:"shoeSize"`
+                ShoeColor  string  `json:"shoeColor"`
+                HeelHeight float64 `json:"heelHeight"`
+                ShoeShape  string  `json:"shoeShape"`
+        }
 
 	ItemUpdate struct {
 		ParentID                uuid.UUID `json:"parentId"                extensions:"x-nullable,x-omitempty"`
@@ -80,14 +86,18 @@ type (
 		Archived                bool      `json:"archived"`
 		SyncChildItemsLocations bool      `json:"syncChildItemsLocations"`
 
-		// Edges
-		LocationID uuid.UUID   `json:"locationId"`
-		LabelIDs   []uuid.UUID `json:"labelIds"`
+                // Edges
+                LocationID uuid.UUID   `json:"locationId"`
+                LabelIDs   []uuid.UUID `json:"labelIds"`
 
-		// Identifications
-		SerialNumber string `json:"serialNumber"`
-		ModelNumber  string `json:"modelNumber"`
-		Manufacturer string `json:"manufacturer"`
+                // Identifications
+                SerialNumber string `json:"serialNumber"`
+                ModelNumber  string `json:"modelNumber"`
+               Manufacturer string  `json:"manufacturer"`
+               ShoeSize     string  `json:"shoeSize"`
+               ShoeColor    string  `json:"shoeColor"`
+               HeelHeight   float64 `json:"heelHeight"`
+               ShoeShape    string  `json:"shoeShape"`
 
 		// Warranty
 		LifetimeWarranty bool       `json:"lifetimeWarranty"`
@@ -124,11 +134,17 @@ type (
 		Description string    `json:"description"`
 		Quantity    int       `json:"quantity"`
 		Insured     bool      `json:"insured"`
-		Archived    bool      `json:"archived"`
-		CreatedAt   time.Time `json:"createdAt"`
-		UpdatedAt   time.Time `json:"updatedAt"`
+                Archived    bool      `json:"archived"`
+                CreatedAt   time.Time `json:"createdAt"`
+                UpdatedAt   time.Time `json:"updatedAt"`
 
-		PurchasePrice float64 `json:"purchasePrice"`
+                PurchasePrice float64 `json:"purchasePrice"`
+
+                // Shoe Specific
+                ShoeSize   string  `json:"shoeSize"`
+                ShoeColor  string  `json:"shoeColor"`
+                HeelHeight float64 `json:"heelHeight"`
+                ShoeShape  string  `json:"shoeShape"`
 
 		// Edges
 		Location *LocationSummary `json:"location,omitempty" extensions:"x-nullable,x-omitempty"`
@@ -208,16 +224,21 @@ func mapItemSummary(item *ent.Item) ItemSummary {
 		CreatedAt:     item.CreatedAt,
 		UpdatedAt:     item.UpdatedAt,
 		Archived:      item.Archived,
-		PurchasePrice: item.PurchasePrice,
+                PurchasePrice: item.PurchasePrice,
 
-		// Edges
-		Location: location,
-		Labels:   labels,
+                // Edges
+                Location: location,
+                Labels:   labels,
 
 		// Warranty
-		Insured: item.Insured,
-		ImageID: imageID,
-	}
+                Insured: item.Insured,
+                ImageID: imageID,
+
+                ShoeSize:   item.ShoeSize,
+                ShoeColor:  item.ShoeColor,
+                HeelHeight: item.HeelHeight,
+                ShoeShape:  item.ShoeShape,
+        }
 }
 
 var (
@@ -270,7 +291,11 @@ func mapItemOut(item *ent.Item) ItemOut {
 		// Identification
 		SerialNumber: item.SerialNumber,
 		ModelNumber:  item.ModelNumber,
-		Manufacturer: item.Manufacturer,
+                Manufacturer: item.Manufacturer,
+                ShoeSize:     item.ShoeSize,
+                ShoeColor:    item.ShoeColor,
+                HeelHeight:   item.HeelHeight,
+                ShoeShape:    item.ShoeShape,
 
 		// Purchase
 		PurchaseTime: types.DateFromTime(item.PurchaseTime),
@@ -573,11 +598,15 @@ func (e *ItemsRepository) Create(ctx context.Context, gid uuid.UUID, data ItemCr
 	q := e.db.Item.Create().
 		SetImportRef(data.ImportRef).
 		SetName(data.Name).
-		SetQuantity(data.Quantity).
-		SetDescription(data.Description).
-		SetGroupID(gid).
-		SetLocationID(data.LocationID).
-		SetAssetID(int(data.AssetID))
+                SetQuantity(data.Quantity).
+                SetDescription(data.Description).
+                SetGroupID(gid).
+                SetLocationID(data.LocationID).
+                SetAssetID(int(data.AssetID)).
+                SetShoeSize(data.ShoeSize).
+                SetShoeColor(data.ShoeColor).
+                SetHeelHeight(data.HeelHeight).
+                SetShoeShape(data.ShoeShape)
 
 	if data.ParentID != uuid.Nil {
 		q.SetParentID(data.ParentID)
@@ -627,9 +656,13 @@ func (e *ItemsRepository) UpdateByGroup(ctx context.Context, gid uuid.UUID, data
 		SetDescription(data.Description).
 		SetLocationID(data.LocationID).
 		SetSerialNumber(data.SerialNumber).
-		SetModelNumber(data.ModelNumber).
-		SetManufacturer(data.Manufacturer).
-		SetArchived(data.Archived).
+                SetModelNumber(data.ModelNumber).
+                SetManufacturer(data.Manufacturer).
+                SetShoeSize(data.ShoeSize).
+                SetShoeColor(data.ShoeColor).
+                SetHeelHeight(data.HeelHeight).
+                SetShoeShape(data.ShoeShape).
+                SetArchived(data.Archived).
 		SetPurchaseTime(data.PurchaseTime.Time()).
 		SetPurchaseFrom(data.PurchaseFrom).
 		SetPurchasePrice(data.PurchasePrice).

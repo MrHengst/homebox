@@ -62,12 +62,26 @@ func (Item) Fields() []ent.Field {
 		field.String("model_number").
 			MaxLen(255).
 			Optional(),
-		field.String("manufacturer").
-			MaxLen(255).
-			Optional(),
+                field.String("manufacturer").
+                        MaxLen(255).
+                        Optional(),
 
-		// ------------------------------------
-		// Item Warranty
+                // ------------------------------------
+                // Shoe Specific
+                field.String("shoe_size").
+                        MaxLen(50).
+                        Optional(),
+                field.String("shoe_color").
+                        MaxLen(50).
+                        Optional(),
+                field.Float("heel_height").
+                        Optional(),
+                field.String("shoe_shape").
+                        MaxLen(50).
+                        Optional(),
+
+                // ------------------------------------
+                // Item Warranty
 		field.Bool("lifetime_warranty").
 			Default(false),
 		field.Time("warranty_expires").

@@ -210,6 +210,29 @@
       maxLength: 255,
     },
     {
+      type: "text",
+      label: "items.shoe_size",
+      ref: "shoeSize",
+      maxLength: 50,
+    },
+    {
+      type: "text",
+      label: "items.shoe_color",
+      ref: "shoeColor",
+      maxLength: 50,
+    },
+    {
+      type: "number",
+      label: "items.heel_height",
+      ref: "heelHeight",
+    },
+    {
+      type: "text",
+      label: "items.shoe_shape",
+      ref: "shoeShape",
+      maxLength: 50,
+    },
+    {
       type: "textarea",
       label: "items.notes",
       ref: "notes",

@@ -203,8 +203,64 @@ func (ic *ItemCreate) SetNillableModelNumber(s *string) *ItemCreate {
 
 // SetManufacturer sets the "manufacturer" field.
 func (ic *ItemCreate) SetManufacturer(s string) *ItemCreate {
-	ic.mutation.SetManufacturer(s)
-	return ic
+        ic.mutation.SetManufacturer(s)
+        return ic
+}
+
+// SetShoeSize sets the "shoe_size" field.
+func (ic *ItemCreate) SetShoeSize(s string) *ItemCreate {
+        ic.mutation.SetShoeSize(s)
+        return ic
+}
+
+// SetNillableShoeSize sets the "shoe_size" field if the given value is not nil.
+func (ic *ItemCreate) SetNillableShoeSize(s *string) *ItemCreate {
+        if s != nil {
+                ic.SetShoeSize(*s)
+        }
+        return ic
+}
+
+// SetShoeColor sets the "shoe_color" field.
+func (ic *ItemCreate) SetShoeColor(s string) *ItemCreate {
+        ic.mutation.SetShoeColor(s)
+        return ic
+}
+
+// SetNillableShoeColor sets the "shoe_color" field if the given value is not nil.
+func (ic *ItemCreate) SetNillableShoeColor(s *string) *ItemCreate {
+        if s != nil {
+                ic.SetShoeColor(*s)
+        }
+        return ic
+}
+
+// SetHeelHeight sets the "heel_height" field.
+func (ic *ItemCreate) SetHeelHeight(f float64) *ItemCreate {
+        ic.mutation.SetHeelHeight(f)
+        return ic
+}
+
+// SetNillableHeelHeight sets the "heel_height" field if the given value is not nil.
+func (ic *ItemCreate) SetNillableHeelHeight(f *float64) *ItemCreate {
+        if f != nil {
+                ic.SetHeelHeight(*f)
+        }
+        return ic
+}
+
+// SetShoeShape sets the "shoe_shape" field.
+func (ic *ItemCreate) SetShoeShape(s string) *ItemCreate {
+        ic.mutation.SetShoeShape(s)
+        return ic
+}
+
+// SetNillableShoeShape sets the "shoe_shape" field if the given value is not nil.
+func (ic *ItemCreate) SetNillableShoeShape(s *string) *ItemCreate {
+        if s != nil {
+                ic.SetShoeShape(*s)
+        }
+        return ic
 }
 
 // SetNillableManufacturer sets the "manufacturer" field if the given value is not nil.
@@ -744,11 +800,27 @@ func (ic *ItemCreate) createSpec() (*Item, *sqlgraph.CreateSpec) {
 		_spec.SetField(item.FieldModelNumber, field.TypeString, value)
 		_node.ModelNumber = value
 	}
-	if value, ok := ic.mutation.Manufacturer(); ok {
-		_spec.SetField(item.FieldManufacturer, field.TypeString, value)
-		_node.Manufacturer = value
-	}
-	if value, ok := ic.mutation.LifetimeWarranty(); ok {
+        if value, ok := ic.mutation.Manufacturer(); ok {
+                _spec.SetField(item.FieldManufacturer, field.TypeString, value)
+                _node.Manufacturer = value
+        }
+        if value, ok := ic.mutation.ShoeSize(); ok {
+                _spec.SetField(item.FieldShoeSize, field.TypeString, value)
+                _node.ShoeSize = value
+        }
+        if value, ok := ic.mutation.ShoeColor(); ok {
+                _spec.SetField(item.FieldShoeColor, field.TypeString, value)
+                _node.ShoeColor = value
+        }
+        if value, ok := ic.mutation.HeelHeight(); ok {
+                _spec.SetField(item.FieldHeelHeight, field.TypeFloat, value)
+                _node.HeelHeight = value
+        }
+        if value, ok := ic.mutation.ShoeShape(); ok {
+                _spec.SetField(item.FieldShoeShape, field.TypeString, value)
+                _node.ShoeShape = value
+        }
+        if value, ok := ic.mutation.LifetimeWarranty(); ok {
 		_spec.SetField(item.FieldLifetimeWarranty, field.TypeBool, value)
 		_node.LifetimeWarranty = value
 	}

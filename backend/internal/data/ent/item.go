@@ -46,9 +46,17 @@ type Item struct {
 	SerialNumber string `json:"serial_number,omitempty"`
 	// ModelNumber holds the value of the "model_number" field.
 	ModelNumber string `json:"model_number,omitempty"`
-	// Manufacturer holds the value of the "manufacturer" field.
-	Manufacturer string `json:"manufacturer,omitempty"`
-	// LifetimeWarranty holds the value of the "lifetime_warranty" field.
+        // Manufacturer holds the value of the "manufacturer" field.
+        Manufacturer string `json:"manufacturer,omitempty"`
+        // ShoeSize holds the value of the "shoe_size" field.
+        ShoeSize string `json:"shoe_size,omitempty"`
+        // ShoeColor holds the value of the "shoe_color" field.
+        ShoeColor string `json:"shoe_color,omitempty"`
+        // HeelHeight holds the value of the "heel_height" field.
+        HeelHeight float64 `json:"heel_height,omitempty"`
+        // ShoeShape holds the value of the "shoe_shape" field.
+        ShoeShape string `json:"shoe_shape,omitempty"`
+        // LifetimeWarranty holds the value of the "lifetime_warranty" field.
 	LifetimeWarranty bool `json:"lifetime_warranty,omitempty"`
 	// WarrantyExpires holds the value of the "warranty_expires" field.
 	WarrantyExpires time.Time `json:"warranty_expires,omitempty"`
@@ -185,12 +193,12 @@ func (*Item) scanValues(columns []string) ([]any, error) {
 		switch columns[i] {
 		case item.FieldInsured, item.FieldArchived, item.FieldSyncChildItemsLocations, item.FieldLifetimeWarranty:
 			values[i] = new(sql.NullBool)
-		case item.FieldPurchasePrice, item.FieldSoldPrice:
-			values[i] = new(sql.NullFloat64)
+               case item.FieldPurchasePrice, item.FieldSoldPrice, item.FieldHeelHeight:
+                       values[i] = new(sql.NullFloat64)
 		case item.FieldQuantity, item.FieldAssetID:
 			values[i] = new(sql.NullInt64)
-		case item.FieldName, item.FieldDescription, item.FieldImportRef, item.FieldNotes, item.FieldSerialNumber, item.FieldModelNumber, item.FieldManufacturer, item.FieldWarrantyDetails, item.FieldPurchaseFrom, item.FieldSoldTo, item.FieldSoldNotes:
-			values[i] = new(sql.NullString)
+               case item.FieldName, item.FieldDescription, item.FieldImportRef, item.FieldNotes, item.FieldSerialNumber, item.FieldModelNumber, item.FieldManufacturer, item.FieldShoeSize, item.FieldShoeColor, item.FieldShoeShape, item.FieldWarrantyDetails, item.FieldPurchaseFrom, item.FieldSoldTo, item.FieldSoldNotes:
+                       values[i] = new(sql.NullString)
 		case item.FieldCreatedAt, item.FieldUpdatedAt, item.FieldWarrantyExpires, item.FieldPurchaseTime, item.FieldSoldTime:
 			values[i] = new(sql.NullTime)
 		case item.FieldID:
